@@ -8,15 +8,15 @@ import {
   FaLinkedinIn,
   FaYoutube,
 } from "react-icons/fa";
-import { MdArrowForward } from "react-icons/md";
 import logo1 from "../assets/logo-1.png";
 import Child from "../assets/Child.png";
 import Water from "../assets/water.png";
 import Contact from "./Contact";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 
 const ContactPage = () => {
   const location = useLocation();
+
   return (
     <>
       {location.pathname === "/contact" && <Contact />}
@@ -35,31 +35,18 @@ const ContactPage = () => {
               Together we rise, lifting hearts and hopes. Your kindness today
               builds a brighter tomorrow.
             </p>
+
             <div className="flex gap-3 mt-6">
-              <a
-                href="#"
-                className="bg-[#1e2633] hover:bg-[#f0541d] p-2 rounded text-white"
-              >
-                <FaFacebookF />
-              </a>
-              <a
-                href="#"
-                className="bg-[#1e2633] hover:bg-[#f0541d] p-2 rounded text-white"
-              >
-                <FaTwitter />
-              </a>
-              <a
-                href="#"
-                className="bg-[#1e2633] hover:bg-[#f0541d] p-2 rounded text-white"
-              >
-                <FaLinkedinIn />
-              </a>
-              <a
-                href="#"
-                className="bg-[#1e2633] hover:bg-[#f0541d] p-2 rounded text-white"
-              >
-                <FaYoutube />
-              </a>
+              {[FaFacebookF, FaTwitter, FaLinkedinIn, FaYoutube].map((Icon, index) => (
+                <a
+                  key={index}
+                  href="#"
+                  className="bg-[#1e2633] hover:bg-[#f0541d] p-2 rounded text-white"
+                  aria-label="Social Link"
+                >
+                  <Icon />
+                </a>
+              ))}
             </div>
           </div>
 
@@ -69,38 +56,21 @@ const ContactPage = () => {
               Quick Links
             </h3>
             <ul className="space-y-2 text-gray-300">
-              <li>
-                <a
-                  href="/about"
-                  className="hover:text-white inter transition-all duration-200"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/media"
-                  className="hover:text-white inter transition-all duration-200"
-                >
-                  Media
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/team"
-                  className="hover:text-white inter transition-all duration-200"
-                >
-                  Team
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/contact"
-                  className="hover:text-white transition-all duration-200"
-                >
-                  Contact
-                </a>
-              </li>
+              {[
+                { name: "About", to: "/about" },
+                { name: "Media", to: "/media" },
+                { name: "Team", to: "/team" },
+                { name: "Contact", to: "/contact" },
+              ].map((link) => (
+                <li key={link.to}>
+                  <NavLink
+                    to={link.to}
+                    className="hover:text-white inter transition-all duration-200"
+                  >
+                    {link.name}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -159,8 +129,8 @@ const ContactPage = () => {
           <div className="max-w-screen-xl mx-auto flex flex-col sm:flex-row justify-between items-center">
             <p>© 2025 Udaanous. All rights reserved</p>
             <div className="flex gap-4 mt-2 sm:mt-0">
-              <a href="#">Terms & Conditions</a>
-              <a href="#">Privacy Policy</a>
+              <NavLink to="#">Terms & Conditions</NavLink>
+              <NavLink to="#">Privacy Policy</NavLink>
             </div>
           </div>
         </div>
